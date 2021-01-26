@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OrderRulesEngine.Rules
 {
-    public class NewMembership : IOrderRule
+    public class MembershipNew : IOrderRule
     {
         private readonly IMembershipRepository _membershipRepository;
 
-        public NewMembership(IMembershipRepository membershipRepository)
+        public MembershipNew(IMembershipRepository membershipRepository)
         {
             _membershipRepository = membershipRepository;
         }

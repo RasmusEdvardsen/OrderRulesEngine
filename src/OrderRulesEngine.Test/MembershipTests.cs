@@ -20,7 +20,7 @@ namespace OrderRulesEngine.Test
         {
             // arrange
             Order order = new(new MembershipProduct(MembershipProductType.New), new(""));
-            NewMembership rule = new(_moqMembershipRepository.Object);
+            MembershipNew rule = new(_moqMembershipRepository.Object);
 
             // act
             var shouldProcess = rule.ShouldProcess(order);
@@ -37,7 +37,38 @@ namespace OrderRulesEngine.Test
         {
             // arrange
             Order order = new(new MembershipProduct(MembershipProductType.Upgrade), new(""));
-            NewMembership rule = new(_moqMembershipRepository.Object);
+            MembershipNew rule = new(_moqMembershipRepository.Object);
+
+            // act
+            var shouldProcess = rule.ShouldProcess(order);
+
+            // assert
+            Assert.False(shouldProcess);
+        }
+
+        [Fact]
+        public void MembershipUpgrade()
+        {
+            // arrange
+            Order order = new(new MembershipProduct(MembershipProductType.Upgrade), new(""));
+            MembershipUpgrade rule = new(_moqMembershipRepository.Object);
+
+            // act
+            var shouldProcess = rule.ShouldProcess(order);
+            var processSucceeded = rule.Process(order);
+
+            // assert
+            Assert.True(shouldProcess);
+            Assert.True(processSucceeded);
+            _moqMembershipRepository.Verify(x => x.UpgradeMembership(It.IsAny<MembershipProduct>()), Times.Once);
+        }
+
+        [Fact]
+        public void MembershipUpgradeNoProcess()
+        {
+            // arrange
+            Order order = new(new MembershipProduct(MembershipProductType.New), new(""));
+            MembershipUpgrade rule = new(_moqMembershipRepository.Object);
 
             // act
             var shouldProcess = rule.ShouldProcess(order);
