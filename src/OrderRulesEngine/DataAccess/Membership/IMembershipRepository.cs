@@ -11,6 +11,6 @@ namespace OrderRulesEngine.DataAccess.Membership
     {
         void ActivateMembership(MembershipProduct product);
         void UpgradeMembership(MembershipProduct product);
-        void EmailCustomer(Customer customer);
+        void EmailCustomer(Customer customer, MembershipProductType type);
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderRulesEngine.Rules
 {
-    interface IOrderRule
+    public interface IOrderRule
     {
         // Check if rule is pertinent to order
         public bool ShouldProcess(Order order);

@@ -14,7 +14,7 @@ namespace OrderRulesEngine.DataAccess.Membership
             // implement logic
         }
 
-        public void EmailCustomer(Customer customer)
+        public void EmailCustomer(Customer customer, MembershipProductType type)
         {
             // implement logic
         }

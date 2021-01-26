@@ -76,5 +76,26 @@ namespace OrderRulesEngine.Test
             // assert
             Assert.False(shouldProcess);
         }
+
+        [Fact]
+        public void MembershipAll()
+        {
+            // arrange
+            Order order = new(new MembershipProduct(MembershipProductType.New), new(""));
+            List<IOrderRule> rules = new() {
+                new MembershipEmail(_moqMembershipRepository.Object),
+                new MembershipNew(_moqMembershipRepository.Object),
+                new MembershipUpgrade(_moqMembershipRepository.Object)
+            };
+
+            // act
+            foreach (var rule in rules.Where(r => r.ShouldProcess(order)))
+                rule.Process(order);
+
+            // assert
+            _moqMembershipRepository.Verify(x => x.ActivateMembership(It.IsAny<MembershipProduct>()), Times.Once);
+            _moqMembershipRepository.Verify(x => x.ActivateMembership(It.IsAny<MembershipProduct>()), Times.Once);
+            _moqMembershipRepository.Verify(x => x.ActivateMembership(It.IsAny<MembershipProduct>()), Times.Once);
+        }
     }
 }
