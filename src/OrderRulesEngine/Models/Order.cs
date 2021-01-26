@@ -10,13 +10,15 @@ namespace OrderRulesEngine.Models
     {
         public Product Product { get; set; }
         public List<PackingSlip> PackingSlips { get; set; }
+        public Customer Customer { get; set; }
 
-        public Order(Product product)
+        public Order(Product product, Customer customer)
         {
             Product = product;
             PackingSlips = new();
+            Customer = customer;
         }
 
-        // NOTE: Outside of scope: Billing, Customer, etc.
+        // NOTE: Outside of scope: Billing, etc.
     }
 }
