@@ -1,4 +1,5 @@
-﻿using OrderRulesEngine.Rules;
+﻿using OrderRulesEngine.Models;
+using OrderRulesEngine.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,16 @@ public class Runner
 
     public void Run()
     {
-        Console.WriteLine(_rules.Count());
+        Console.WriteLine($"Rules in engine: {_rules.Count()}");
+        Order order = new(new PhysicalProduct(PhysicalProductType.Book), new(""));
+
+        var timesOrderProcessed = 0;
+        foreach (var rule in _rules.Where(r => r.ShouldProcess(order)))
+            if (rule.Process(order))
+                timesOrderProcessed++;
+
+        if (timesOrderProcessed > 0)
+            Console.WriteLine($"Order has been processed by {timesOrderProcessed} rules now."
+                + "\nEither run in debug, or check unit tests to see changes.");
     }
 }
