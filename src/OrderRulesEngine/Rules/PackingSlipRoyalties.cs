@@ -10,7 +10,7 @@ namespace OrderRulesEngine.Rules
     public class PackingSlipRoyalties : IOrderRule
     {
         public bool ShouldProcess(Order order) =>
-            order.Product is PhysicalProduct p && p.Type == PhysicalProductType.Book;
+            order.Products.Any(p => p is PhysicalProduct m && m.Type == PhysicalProductType.Book);
 
         // NOTE: We could combine the 2 packing slip rules here.
         public bool Process(Order order)

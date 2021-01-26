@@ -14,7 +14,7 @@ namespace OrderRulesEngine.Rules
     /// </summary>
     public class PackingSlipShipping : IOrderRule
     {
-        public bool ShouldProcess(Order order) => order.Product is PhysicalProduct;
+        public bool ShouldProcess(Order order) => order.Products.Any(p => p is PhysicalProduct);
         
         // NOTE: We could combine the 2 packing slip rules here.
         public bool Process(Order order)

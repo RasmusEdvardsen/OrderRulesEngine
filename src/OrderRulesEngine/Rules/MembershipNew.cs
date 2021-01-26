@@ -18,15 +18,13 @@ namespace OrderRulesEngine.Rules
         }
 
         public bool ShouldProcess(Order order) =>
-            order.Product is MembershipProduct m && m.Type == MembershipProductType.New;
+            order.Products.Any(p => p is MembershipProduct m && m.Type == MembershipProductType.New);
 
         public bool Process(Order order)
         {
-            if (order.Product is not MembershipProduct membershipProduct)
-                return false;
-
-            _membershipRepository.ActivateMembership(membershipProduct);
-
+            var products = order.Products.Where(p => p is MembershipProduct m && m.Type == MembershipProductType.New);
+            foreach (MembershipProduct product in products)
+                _membershipRepository.ActivateMembership(product);
             return true;
         }
     }

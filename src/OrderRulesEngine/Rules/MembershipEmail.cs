@@ -18,15 +18,12 @@ namespace OrderRulesEngine.Rules
         }
 
         public bool ShouldProcess(Order order) =>
-            order.Product is MembershipProduct m;
+            order.Products.Any(p => p is MembershipProduct);
 
         public bool Process(Order order)
         {
-            if (order.Product is not MembershipProduct m)
-                return false;
-
-            _membershipRepository.EmailCustomer(order.Customer, m.Type);
-
+            foreach (MembershipProduct product in order.Products.Where(p => p is MembershipProduct))
+                _membershipRepository.EmailCustomer(order.Customer, product.Type);
             return true;
         }
     }
