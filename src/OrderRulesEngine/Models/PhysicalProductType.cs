@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace OrderRulesEngine.Models
 {
-    public class Product
+    public enum PhysicalProductType
     {
-        // NOTE: out of scope: ProductId, Price, etc.
+        Unspecified,
+        Book,
+        Football
     }
 }
